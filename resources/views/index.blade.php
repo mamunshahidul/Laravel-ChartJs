@@ -27,6 +27,7 @@
 <script>
     var url = "{{ url('daily-revenue/chart') }}";
     var Months = new Array();
+    var Counts = new Array();
 
     $.get( url, function (response)
     {
@@ -34,16 +35,17 @@
         console.log(response[0]);
         response.forEach(function (data) {
             Months.push(data.month);
+            Counts.push(data.total);
         });
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: Months,
                 datasets: [
                     {
                         label: '# Daily Revenue',
-                        data: [12, 19, 3, 5, 2],
+                        data: Counts,
                         borderColor: [
                             'rgba(255,99,132,1)',
                             'rgba(54, 162, 235, 1)',
